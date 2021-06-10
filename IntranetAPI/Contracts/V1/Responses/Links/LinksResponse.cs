@@ -7,6 +7,6 @@ namespace IntranetAPI.Contracts.V1.Responses.Links
 {
     public class LinksResponse
     {
-        public string Links { get; set; }
+        public string Link { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntranetAPI.Entities.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace IntranetAPI.Entities
 
         [Key]
         public int Id { get; set; }
-        public string Category { get; set; }
+        public Category Category { get; set; }
         public string Path { get; set; }
         public DateTime UploadDate { get; set; }
     }
