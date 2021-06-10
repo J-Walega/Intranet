@@ -1,6 +1,7 @@
 using IntranetAPI.Repo;
 using IntranetAPI.Repo.Interfaces;
 using IntranetAPI.Services.AuthorizationServices;
+using IntranetAPI.Services.FilesServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,8 +29,10 @@ namespace IntranetAPI
                 Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IFileService, FileService>();
 
             services.AddTransient<IUserRepo, UserRepo>();
+            services.AddTransient<IFileRepo, FileRepo>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -53,6 +56,8 @@ namespace IntranetAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseStaticFiles();
 
             app.UseEndpoints(endpoints =>
             {
