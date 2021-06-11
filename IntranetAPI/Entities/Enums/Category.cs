@@ -8,6 +8,5 @@ namespace IntranetAPI.Entities.Enums
         BHP,
         Instrukcje,
         Zarzadzenia,
-        Inne,
     }
 }
