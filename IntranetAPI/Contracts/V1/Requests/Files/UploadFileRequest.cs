@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
+﻿using IntranetAPI.Entities.Enums;
+using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace IntranetAPI.Contracts.V1.Requests.Files
 {
@@ -12,6 +9,6 @@ namespace IntranetAPI.Contracts.V1.Requests.Files
         [Required]
         public IFormFile File { get; set; }
         [Required]
-        public string Category { get; set; }
+        public Category Category { get; set; }
     }
 }
