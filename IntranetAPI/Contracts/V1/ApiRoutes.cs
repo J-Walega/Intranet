@@ -20,7 +20,7 @@ namespace IntranetAPI.Contracts.V1
         public static class Links
         {
             public const string GetLinks = Base + "/links/{category}";
-            public const string UploadFile = Base + "/links";
+            public const string AddLink = Base + "/link";
         }
 
         public static class Files
