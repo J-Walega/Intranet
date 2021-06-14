@@ -1,13 +1,16 @@
 using IntranetAPI.Repo;
 using IntranetAPI.Repo.Interfaces;
 using IntranetAPI.Services.AuthorizationServices;
+using IntranetAPI.Services.FilesServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.IO;
 
 namespace IntranetAPI
 {
@@ -28,14 +31,18 @@ namespace IntranetAPI
                 Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IFileService, FileService>();
 
             services.AddTransient<IUserRepo, UserRepo>();
+            services.AddTransient<IFileRepo, FileRepo>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntranetAPI", Version = "v1" });
             });
+
+            services.AddDirectoryBrowser();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +60,20 @@ namespace IntranetAPI
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "Uploads")),
+                RequestPath = "/uploads"
+            });
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "Uploads")),
+                RequestPath = "/uploads"
+            });
 
             app.UseEndpoints(endpoints =>
             {
