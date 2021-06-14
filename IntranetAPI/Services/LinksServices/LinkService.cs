@@ -1,4 +1,5 @@
-﻿using IntranetAPI.Entities;
+﻿using IntranetAPI.Contracts.V1.Requests.Links;
+using IntranetAPI.Entities;
 using IntranetAPI.Repo.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,26 @@ namespace IntranetAPI.Services.LinksServices
         {
             _repo = repo;
         }
-        public async Task<bool> SaveLink(Link link)
+
+        public async Task<List<Link>> GetLinksByCategory(string category)
         {
-            await _repo.SaveLinkAsync(link);
-            return true;
+            return await _repo.GetLinksByCategoryAsync(category);
+        }
+
+        public async Task<bool> SaveLink(AddLinkRequest request)
+        {
+            Link link = new()
+            {
+                Category = request.Category,
+                Url = request.Url,
+                Description = request.Description
+            };
+
+            if(await _repo.SaveLinkAsync(link) == true)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

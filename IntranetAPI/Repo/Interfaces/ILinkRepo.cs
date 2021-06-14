@@ -9,5 +9,6 @@ namespace IntranetAPI.Repo.Interfaces
     public interface ILinkRepo
     {
         Task<bool> SaveLinkAsync(Link link);
+        Task<List<Link>> GetLinksByCategoryAsync(string category);
     }
 }
