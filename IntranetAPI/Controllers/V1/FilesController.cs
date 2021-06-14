@@ -1,5 +1,6 @@
 ﻿using IntranetAPI.Contracts.V1;
 using IntranetAPI.Contracts.V1.Requests.Files;
+using IntranetAPI.Services.FilesServices;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,10 +11,22 @@ namespace IntranetAPI.Controllers.V1
 {
     public class FilesController : ControllerBase
     {
+        private readonly IFileService _service;
+
+        public FilesController(IFileService service)
+        {
+            _service = service;
+        }
+
         [HttpPost(ApiRoutes.Files.Upload)]
         public async Task<IActionResult> UploadFile([FromForm] UploadFileRequest request)
         {
-            return BadRequest("Not implemented");
+            var result = await _service.UploadFileAsync(request);
+            if(result!=true)
+            {
+                return BadRequest("Not implemented");
+            }
+            return Ok("Created");
         }
     }
 }

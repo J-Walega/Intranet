@@ -41,6 +41,8 @@ namespace IntranetAPI
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntranetAPI", Version = "v1" });
             });
+
+            services.AddDirectoryBrowser();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,6 +63,12 @@ namespace IntranetAPI
 
             app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(env.ContentRootPath, "Uploads")),
+                RequestPath = "/uploads"
+            });
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions
             {
                 FileProvider = new PhysicalFileProvider(
                     Path.Combine(env.ContentRootPath, "Uploads")),
