@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace IntranetAPI.Entities.Enums
 {
@@ -6,8 +7,11 @@ namespace IntranetAPI.Entities.Enums
     public enum Category
     {
         Placeholder,
+        [Display(Name = "BHP")]
         BHP,
+        [Display(Name = "Instrukcje")]
         Instrukcje,
+        [Display(Name = "Zarzadzenia")]
         Zarzadzenia,
     }
 }
