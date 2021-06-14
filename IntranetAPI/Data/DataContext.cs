@@ -1,5 +1,7 @@
 ﻿using IntranetAPI.Entities;
+using IntranetAPI.Entities.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,17 @@ namespace IntranetAPI.Repo
         public DataContext(DbContextOptions<DataContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<File>()
+                .Property(b => b.Category)
+                .HasConversion<string>();
+
+            modelBuilder.Entity<Link>()
+                .Property(b => b.Category)
+                .HasConversion<string>();
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Link> Links { get; set; }

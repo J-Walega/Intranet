@@ -24,6 +24,7 @@ namespace IntranetAPI.Repo
 
         public async Task<List<Link>> GetLinksByCategoryAsync(string category)
         {
+            //TODO Fix it
             var links = await _context.Links
                 .Where(x => x.Category.ToString()
                 .Contains(category))
