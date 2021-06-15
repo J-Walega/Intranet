@@ -1,5 +1,6 @@
 ﻿using IntranetAPI.Contracts.V1.Requests.Files;
 using IntranetAPI.Entities;
+using IntranetAPI.Entities.Enums;
 using IntranetAPI.Repo.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -27,6 +28,12 @@ namespace IntranetAPI.Repo
         public async Task<List<File>> GetAllAsync()
         {
             var files = _context.Files.ToListAsync();
+            return await files;
+        }
+
+        public async Task<List<File>> GetByCategoryAsync(Category category)
+        {
+            var files = _context.Files.Where(x => x.Category == category).ToListAsync();
             return await files;
         }
 

@@ -1,5 +1,6 @@
 ﻿using IntranetAPI.Contracts.V1.Requests.Files;
 using IntranetAPI.Entities;
+using IntranetAPI.Entities.Enums;
 using IntranetAPI.Repo.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using System;
@@ -28,6 +29,11 @@ namespace IntranetAPI.Services.FilesServices
         public async Task<List<File>> GetAllAsync()
         {
             return await _repo.GetAllAsync();
+        }
+
+        public async Task<List<File>> GetByCategory(Category category)
+        {
+            return await _repo.GetByCategoryAsync(category);
         }
 
         public async Task<bool> UploadAsync(UploadFileRequest request)

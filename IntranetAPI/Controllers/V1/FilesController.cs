@@ -55,7 +55,12 @@ namespace IntranetAPI.Controllers.V1
         [HttpGet(ApiRoutes.Files.GetByCategory)]
         public async Task<IActionResult> GetFilesByCategory([FromRoute] Category category)
         {
-            return BadRequest("Not implemented");
+            var result = await _service.GetByCategory(category);
+            if(result?.Any() == false)
+            {
+                return NoContent();
+            }
+            return Ok(result);
         }
     }
 }
