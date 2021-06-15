@@ -16,6 +16,7 @@ namespace IntranetAPI.Entities
 
         [Key]
         public int Id { get; set; }
+        public string Description { get; set; }
         public Category Category { get; set; }
         public string Path { get; set; }
         public DateTime UploadDate { get; set; }

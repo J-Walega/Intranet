@@ -16,9 +16,10 @@ namespace IntranetAPI.Repo
             context = _context;
         }
 
-        public Task<bool> SaveFileAsync(File file)
+        public async Task<bool> SaveFileAsync(File file)
         {
-            throw new NotImplementedException();
+            await _context.AddAsync(file);
+            return await SaveChangesAsync();
         }
 
         private async Task<bool> SaveChangesAsync()

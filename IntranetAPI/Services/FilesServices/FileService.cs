@@ -26,16 +26,17 @@ namespace IntranetAPI.Services.FilesServices
             {
                 var file = new File
                 {
+                    Description = request.Description,
                     Category = request.Category,
                     Path = $"/Uploads/{request.Category}/{request.File.FileName}"
                 };
                 System.IO.Directory.CreateDirectory($"Uploads//{request.Category}");
                 string path = _enviroment.ContentRootPath + "\\Uploads\\" + request.Category + "\\" + request.File.FileName;
                 var info = new System.IO.FileInfo(path);
-
-                using System.IO.FileStream fileStream = System.IO.File.Create(path);
+              
                 if (!info.Exists)
                 {
+                    using System.IO.FileStream fileStream = System.IO.File.Create(path);
                     await request.File.CopyToAsync(fileStream);
                     fileStream.Flush();
                     // Uncomment to save in DB
