@@ -24,7 +24,7 @@ namespace IntranetAPI.Controllers.V1
             var result = await _service.UploadFileAsync(request);
             if(result!=true)
             {
-                return BadRequest("File with that filename already exists");
+                return BadRequest("File with that name already exists");
             }
             return Ok("Created");
         }
