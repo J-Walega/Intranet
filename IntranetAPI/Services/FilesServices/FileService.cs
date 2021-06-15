@@ -20,17 +20,17 @@ namespace IntranetAPI.Services.FilesServices
             _enviroment = enviroment;
         }
 
-        public async Task<bool> DeleteFileAsync(int Id)
+        public async Task<bool> DeleteAsync(int Id)
         {
-            return await _repo.DeleteFileAsync(Id);
+            return await _repo.DeleteAsync(Id);
         }
 
-        public async Task<List<File>> GetAllFilesAsync()
+        public async Task<List<File>> GetAllAsync()
         {
             return await _repo.GetAllAsync();
         }
 
-        public async Task<bool> UploadFileAsync(UploadFileRequest request)
+        public async Task<bool> UploadAsync(UploadFileRequest request)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace IntranetAPI.Services.FilesServices
                     await request.File.CopyToAsync(fileStream);
                     fileStream.Flush();
                     // Uncomment to save in DB
-                    // await _repo.SaveFileAsync(file);
+                    // await _repo.SaveAsync(file);
                     return true;
                 }
                 return false;

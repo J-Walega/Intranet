@@ -17,7 +17,7 @@ namespace IntranetAPI.Repo
             _context = context;
         }
 
-        public async Task<bool> DeleteFileAsync(int Id)
+        public async Task<bool> DeleteAsync(int Id)
         {
             var file = _context.Files.Where(x => x.Id == Id).FirstOrDefault();
             _context.Remove(file);
@@ -30,7 +30,7 @@ namespace IntranetAPI.Repo
             return await files;
         }
 
-        public async Task<bool> SaveFileAsync(File file)
+        public async Task<bool> SaveAsync(File file)
         {
             await _context.Files.AddAsync(file);
             return await SaveChangesAsync();
