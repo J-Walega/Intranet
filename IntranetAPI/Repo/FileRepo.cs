@@ -24,6 +24,12 @@ namespace IntranetAPI.Repo
             return await SaveChangesAsync();
         }
 
+        public async Task<List<File>> GetAllAsync()
+        {
+            var files = _context.Files.ToListAsync();
+            return await files;
+        }
+
         public async Task<bool> SaveFileAsync(File file)
         {
             await _context.Files.AddAsync(file);

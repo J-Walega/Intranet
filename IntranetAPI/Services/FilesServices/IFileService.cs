@@ -1,4 +1,5 @@
 ﻿using IntranetAPI.Contracts.V1.Requests.Files;
+using IntranetAPI.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace IntranetAPI.Services.FilesServices
     {
         Task<bool> UploadFileAsync(UploadFileRequest request);
         Task<bool> DeleteFileAsync(int Id);
+        Task<List<File>> GetAllFilesAsync();
     }
 }

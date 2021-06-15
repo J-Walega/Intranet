@@ -11,5 +11,6 @@ namespace IntranetAPI.Repo.Interfaces
     {
         Task<bool> SaveFileAsync(File file);
         Task<bool> DeleteFileAsync(int Id);
+        Task<List<File>> GetAllAsync();
     }
 }

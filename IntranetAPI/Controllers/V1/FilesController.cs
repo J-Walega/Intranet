@@ -1,5 +1,6 @@
 ﻿using IntranetAPI.Contracts.V1;
 using IntranetAPI.Contracts.V1.Requests.Files;
+using IntranetAPI.Entities;
 using IntranetAPI.Services.FilesServices;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -38,6 +39,16 @@ namespace IntranetAPI.Controllers.V1
                 return BadRequest("Something went wrong");
             }
             return NoContent();
+        }
+        [HttpGet(ApiRoutes.Files.GetAll)]
+        public async Task<IActionResult> GetAllFiles()
+        {
+            var result = await _service.GetAllFilesAsync();
+            if(result?.Any() == false)
+            {
+                return NoContent();
+            }
+            return Ok(result);
         }
     }
 }

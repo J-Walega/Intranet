@@ -25,6 +25,11 @@ namespace IntranetAPI.Services.FilesServices
             return await _repo.DeleteFileAsync(Id);
         }
 
+        public async Task<List<File>> GetAllFilesAsync()
+        {
+            return await _repo.GetAllAsync();
+        }
+
         public async Task<bool> UploadFileAsync(UploadFileRequest request)
         {
             try
