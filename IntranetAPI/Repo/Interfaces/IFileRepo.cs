@@ -10,5 +10,6 @@ namespace IntranetAPI.Repo.Interfaces
     public interface IFileRepo
     {
         Task<bool> SaveFileAsync(File file);
+        Task<bool> DeleteFileAsync(int Id);
     }
 }

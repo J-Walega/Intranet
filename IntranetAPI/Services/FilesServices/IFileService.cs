@@ -9,5 +9,6 @@ namespace IntranetAPI.Services.FilesServices
     public interface IFileService
     {
         Task<bool> UploadFileAsync(UploadFileRequest request);
+        Task<bool> DeleteFileAsync(int Id);
     }
 }
