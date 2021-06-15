@@ -27,7 +27,7 @@ namespace IntranetAPI.Controllers.V1
         }
 
         [HttpPost(ApiRoutes.Links.AddLink)]
-        public async Task<IActionResult> AddLink([FromBody] AddLinkRequest request)
+        public async Task<IActionResult> AddLink([FromForm] AddLinkRequest request)
         {
             if (TryValidateModel(request) == true)
             {

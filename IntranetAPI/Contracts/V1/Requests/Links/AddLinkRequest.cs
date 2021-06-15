@@ -13,7 +13,6 @@ namespace IntranetAPI.Contracts.V1.Requests.Links
         public string Description { get; set; }
         [Required]
         public string Url { get; set; }
-        [Required]
         public Category Category { get; set; }
     }
 }
