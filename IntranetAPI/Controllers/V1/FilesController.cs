@@ -24,9 +24,20 @@ namespace IntranetAPI.Controllers.V1
             var result = await _service.UploadFileAsync(request);
             if(result!=true)
             {
-                return BadRequest("Not implemented");
+                return BadRequest("File with that filename already exists");
             }
             return Ok("Created");
+        }
+
+        [HttpDelete(ApiRoutes.Files.Delete)]
+        public async Task<IActionResult> DeleteFile(int id)
+        {
+            var result = await _service.DeleteFileAsync(id);
+            if(result!=true)
+            {
+                return BadRequest("Something went wrong");
+            }
+            return NoContent();
         }
     }
 }

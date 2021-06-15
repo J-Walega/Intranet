@@ -26,6 +26,7 @@ namespace IntranetAPI.Contracts.V1
         public static class Files
         {
             public const string Upload = Base + "/files";
+            public const string Delete = Base + "/files/{id}";
         }
     }
 }

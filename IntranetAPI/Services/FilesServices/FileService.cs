@@ -20,6 +20,11 @@ namespace IntranetAPI.Services.FilesServices
             _enviroment = enviroment;
         }
 
+        public async Task<bool> DeleteFileAsync(int Id)
+        {
+            return await _repo.DeleteFileAsync(Id);
+        }
+
         public async Task<bool> UploadFileAsync(UploadFileRequest request)
         {
             try
