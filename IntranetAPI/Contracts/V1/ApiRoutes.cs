@@ -27,5 +27,10 @@ namespace IntranetAPI.Contracts.V1
         {
             public const string Upload = Base + "/files";
         }
+
+        public static class Phonebook
+        {
+            public const string GetAll = Base + "/phones";
+        }
     }
 }

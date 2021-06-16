@@ -32,7 +32,7 @@ namespace IntranetAPI.Controllers.V1
             if (TryValidateModel(request) == true)
             {
                 var result = await _service.SaveLink(request);
-                return Ok();
+                return Ok(result);
             }
             return BadRequest("Something went wrong");
         }

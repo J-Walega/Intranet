@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IntranetAPI.Services.PhonebookServecs
+namespace IntranetAPI.Repo.Interfaces
 {
-    public interface IPhonebookService
+    public interface IPhoneRepo
     {
-        Task<List<Phone>> GetPhones();
+        Task<List<Phone>> GetPhonesAsync();
     }
 }
