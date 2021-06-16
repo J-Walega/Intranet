@@ -28,7 +28,12 @@ namespace IntranetAPI.Controllers.V1
         [HttpPost(ApiRoutes.Phonebook.Add)]
         public async Task<IActionResult> AddPhone([FromBody] AddPhoneRequest request)
         {
-            return BadRequest("not implemented");
+            var response = await _service.AddPhone(request);
+            if(response != false)
+            {
+                return Ok("Created");
+            }
+            return BadRequest("Something went wrong");
         }
 
         [HttpDelete(ApiRoutes.Phonebook.Delete)]

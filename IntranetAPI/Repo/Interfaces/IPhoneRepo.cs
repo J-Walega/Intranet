@@ -9,5 +9,6 @@ namespace IntranetAPI.Repo.Interfaces
     public interface IPhoneRepo
     {
         Task<List<Phone>> GetPhonesAsync();
+        Task<bool> AddPhoneAsync(Phone phone);
     }
 }

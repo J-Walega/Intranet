@@ -17,10 +17,21 @@ namespace IntranetAPI.Repo
             _context = context;
         }
 
+        public async Task<bool> AddPhoneAsync(Phone phone)
+        {
+            await _context.AddAsync(phone);
+            return await SaveChangesAsync();
+        }
+
         public async Task<List<Phone>> GetPhonesAsync()
         {
             var phones = await _context.Phones.ToListAsync();
             return phones;
+        }
+
+        private async Task<bool> SaveChangesAsync()
+        {
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }
