@@ -30,7 +30,10 @@ namespace IntranetAPI.Contracts.V1
 
         public static class Phonebook
         {
+            public const string Add = Base + "/phones";
             public const string GetAll = Base + "/phones";
+            public const string Update = Base + "/phones/{phoneId}";
+            public const string Delete = Base + "/phones/{phoneId}";
         }
     }
 }

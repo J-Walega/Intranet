@@ -1,4 +1,6 @@
 ﻿using IntranetAPI.Contracts.V1;
+using IntranetAPI.Contracts.V1.Requests.Phone;
+using IntranetAPI.Entities;
 using IntranetAPI.Services.PhonebookServecs;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,6 +23,31 @@ namespace IntranetAPI.Controllers.V1
         {
             var response = await _service.GetPhones();
             return Ok(response);
+        }
+
+        [HttpPost(ApiRoutes.Phonebook.Add)]
+        public async Task<IActionResult> AddPhone([FromBody] AddPhoneRequest request)
+        {
+            return BadRequest("not implemented");
+        }
+
+        [HttpDelete(ApiRoutes.Phonebook.Delete)]
+        public async Task<IActionResult> DeletePhone([FromRoute] int phoneId)
+        {
+            return BadRequest("not implemented");
+        }
+
+        [HttpPatch(ApiRoutes.Phonebook.Update)]
+        public async Task<IActionResult> UpdatePhone([FromRoute] int phoneId, [FromBody] AddPhoneRequest request)
+        {
+            var phone = new Phone
+            {
+                Id = phoneId,
+                Name = request.Name,
+                Number = request.Number
+            };
+
+            return BadRequest("not implemented");
         }
     }
 }
