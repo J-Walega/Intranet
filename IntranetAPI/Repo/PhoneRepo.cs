@@ -29,6 +29,14 @@ namespace IntranetAPI.Repo
             return phones;
         }
 
+        public async Task<bool> UpdatePhoneAsync(Phone phone)
+        {
+            _context.Entry(await _context.Phones
+                .FirstOrDefaultAsync(x => x.Id == phone.Id))
+                .CurrentValues.SetValues(phone);
+            return await SaveChangesAsync();
+        }
+
         private async Task<bool> SaveChangesAsync()
         {
             return await _context.SaveChangesAsync() > 0;

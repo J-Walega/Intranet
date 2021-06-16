@@ -31,5 +31,10 @@ namespace IntranetAPI.Services.PhonebookServecs
         {
             return await _repo.GetPhonesAsync();
         }
+
+        public async Task<bool> UpdatePhone(Phone phone)
+        {
+            return await _repo.UpdatePhoneAsync(phone);
+        }
     }
 }

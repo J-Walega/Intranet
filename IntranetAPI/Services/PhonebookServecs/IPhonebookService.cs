@@ -11,5 +11,6 @@ namespace IntranetAPI.Services.PhonebookServecs
     {
         Task<List<Phone>> GetPhones();
         Task<bool> AddPhone(AddPhoneRequest request);
+        Task<bool> UpdatePhone(Phone phone);
     }
 }

@@ -52,7 +52,12 @@ namespace IntranetAPI.Controllers.V1
                 Number = request.Number
             };
 
-            return BadRequest("not implemented");
+            var response = await _service.UpdatePhone(phone);
+            if(response != false)
+            {
+                return Ok("Updated");
+            }
+            return BadRequest("Something went wrong");
         }
     }
 }
