@@ -7,6 +7,8 @@ function Navigation() {
             <NavbarBrand href="#home">RCZ Lubin</NavbarBrand>
             <Nav className="mr-auto">
                 <Nav.Link href="#home">Home</Nav.Link>
+                <Nav.Link href="#zarzadzenia">Aktualne zarządzenia</Nav.Link>
+                <Nav.Link href="#ksiazka">Książka telefoniczna</Nav.Link>
                 <Nav.Link href="#bhp">BHP</Nav.Link>
                 <Nav.Link href="#links">Linki</Nav.Link>
             </Nav>
