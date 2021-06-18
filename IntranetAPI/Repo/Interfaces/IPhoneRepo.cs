@@ -11,5 +11,6 @@ namespace IntranetAPI.Repo.Interfaces
         Task<List<Phone>> GetPhonesAsync();
         Task<bool> AddPhoneAsync(Phone phone);
         Task<bool> UpdatePhoneAsync(Phone phone);
+        Task<bool> DeletePhoneAsync(int id);
     }
 }

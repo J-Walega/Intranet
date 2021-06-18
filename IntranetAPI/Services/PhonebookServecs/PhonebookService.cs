@@ -1,9 +1,7 @@
 ﻿using IntranetAPI.Contracts.V1.Requests.Phone;
 using IntranetAPI.Entities;
 using IntranetAPI.Repo.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace IntranetAPI.Services.PhonebookServecs
@@ -19,12 +17,17 @@ namespace IntranetAPI.Services.PhonebookServecs
 
         public async Task<bool> AddPhone(AddPhoneRequest request)
         {
-            Phone phone = new Phone
+            Phone phone = new()
             {
                 Name = request.Name,
                 Number = request.Number
             };
             return await _repo.AddPhoneAsync(phone);
+        }
+
+        public async Task<bool> DeletePhone(int id)
+        {
+            return await _repo.DeletePhoneAsync(id);
         }
 
         public async Task<List<Phone>> GetPhones()

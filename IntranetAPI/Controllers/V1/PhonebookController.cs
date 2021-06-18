@@ -3,9 +3,6 @@ using IntranetAPI.Contracts.V1.Requests.Phone;
 using IntranetAPI.Entities;
 using IntranetAPI.Services.PhonebookServecs;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace IntranetAPI.Controllers.V1

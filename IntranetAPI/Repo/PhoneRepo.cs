@@ -19,7 +19,14 @@ namespace IntranetAPI.Repo
 
         public async Task<bool> AddPhoneAsync(Phone phone)
         {
-            await _context.AddAsync(phone);
+            await _context.Phones.AddAsync(phone);
+            return await SaveChangesAsync();
+        }
+
+        public async Task<bool> DeletePhoneAsync(int id)
+        {
+            var Phone = _context.Phones.FindAsync(id);
+            _context.Remove(Phone);
             return await SaveChangesAsync();
         }
 
