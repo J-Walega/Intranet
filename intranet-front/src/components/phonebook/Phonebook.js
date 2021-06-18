@@ -1,18 +1,27 @@
-import { Container, Row, Col } from 'react-bootstrap';
-import './Phonebook.css'
 
-function Phonebook() {
-    return(
-        <Container fluid="md">
-            <Row>
-                <Col>Centrala Telefoniczna</Col>
-                <Col>4</Col>
-            </Row>
-            <Row>
-                <Col></Col>
-            </Row>
-        </Container>
-    )
+import axios from 'axios';
+import React from 'react';
+import './Phonebook.css';
+
+export default class Phonebook extends React.Component {
+    state = {
+        phones: []
+    }
+
+
+componentDidMount() {
+    axios.get('https://localhost:44332/api/v1/phones')
+        .then(res => {
+            const phones = res.data;
+            this.setState({ phones });
+        })
 }
 
-export default Phonebook;
+render() {
+    return (
+        <ul>
+            {this.state.phones.map(phone => <li>{phone.number}</li>)}
+        </ul>
+    )
+ }
+}
