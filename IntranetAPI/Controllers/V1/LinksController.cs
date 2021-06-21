@@ -18,12 +18,12 @@ namespace IntranetAPI.Controllers.V1
         [HttpGet(ApiRoutes.Links.GetLinks)]
         public async Task<IActionResult> GetLinks([FromRoute] string category)
         {
-            if(category != string.Empty)
+            var content = await _service.GetLinksByCategory(category);
+            if(content.Count != 0)
             {
-                var content = await _service.GetLinksByCategory(category);
                 return Ok(content);
             }
-            return BadRequest("Something went wrong");
+            return NoContent();
         }
 
         [HttpPost(ApiRoutes.Links.AddLink)]

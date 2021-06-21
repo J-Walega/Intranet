@@ -22,9 +22,9 @@ namespace IntranetAPI.Controllers.V1
         public async Task<IActionResult> UploadFile([FromForm] UploadFileRequest request)
         {
             var result = await _service.UploadFileAsync(request);
-            if(result!=true)
+            if(result.Success != true)
             {
-                return BadRequest("Not implemented");
+                return BadRequest($"{result.Errors}");
             }
             return Ok("Created");
         }
