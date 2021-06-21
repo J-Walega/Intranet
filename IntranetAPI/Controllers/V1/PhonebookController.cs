@@ -19,7 +19,11 @@ namespace IntranetAPI.Controllers.V1
         public async Task<IActionResult> GetAllPhones()
         {
             var response = await _service.GetPhones();
-            return Ok(response);
+            if (response.Count != 0)
+            {
+                return Ok(response);
+            }
+            return NoContent();
         }
 
         [HttpPost(ApiRoutes.Phonebook.Add)]
