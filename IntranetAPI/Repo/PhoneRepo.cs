@@ -25,9 +25,13 @@ namespace IntranetAPI.Repo
 
         public async Task<bool> DeletePhoneAsync(int id)
         {
-            var Phone = _context.Phones.FindAsync(id);
-            _context.Remove(Phone);
-            return await SaveChangesAsync();
+            var Phone = await _context.Phones.FirstOrDefaultAsync(x => x.Id == id);
+            if(Phone != null)
+            {
+                _context.Remove(Phone);
+                return await SaveChangesAsync();
+            }
+            return false;
         }
 
         public async Task<List<Phone>> GetPhonesAsync()

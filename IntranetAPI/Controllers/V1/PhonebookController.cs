@@ -36,7 +36,12 @@ namespace IntranetAPI.Controllers.V1
         [HttpDelete(ApiRoutes.Phonebook.Delete)]
         public async Task<IActionResult> DeletePhone([FromRoute] int phoneId)
         {
-            return BadRequest("not implemented");
+            var response = await _service.DeletePhone(phoneId);
+            if (response != false)
+            {
+                return Ok("Deleted");
+            }
+            return BadRequest("Phone with that id doesn't exists");
         }
 
         [HttpPatch(ApiRoutes.Phonebook.Update)]
