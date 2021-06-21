@@ -1,0 +1,11 @@
+.row{
+    padding: 5px;
+    width: fit-content;
+}
+
+.col{
+    padding: 5px;
+    border: 2px;
+    border-color: black;
+    border-style: solid;
+}

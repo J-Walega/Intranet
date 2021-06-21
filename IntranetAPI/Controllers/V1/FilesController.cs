@@ -23,10 +23,10 @@ namespace IntranetAPI.Controllers.V1
         [HttpPost(ApiRoutes.Files.Upload)]
         public async Task<IActionResult> UploadFile([FromForm] UploadFileRequest request)
         {
-            var result = await _service.UploadAsync(request);
-            if(result!=true)
+            var result = await _service.UploadFileAsync(request);
+            if(result.Success != true)
             {
-                return BadRequest("File with that name already exists");
+                return BadRequest($"{result.Errors}");
             }
             return Ok("Created");
         }

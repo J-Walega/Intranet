@@ -22,6 +22,7 @@ namespace IntranetAPI.Services.FilesServices
             _enviroment = enviroment;
         }
 
+
         public async Task<ServiceResult> DeleteAsync(int Id)
         {
             var file = await _repo.FindFileAsync(Id);
@@ -83,13 +84,17 @@ namespace IntranetAPI.Services.FilesServices
                     using System.IO.FileStream fileStream = System.IO.File.Create(path);
                     await request.File.CopyToAsync(fileStream);
                     fileStream.Flush();
+
                     await _repo.SaveAsync(file);
+
                     return new ServiceResult
                     {
                         Success = true
                     };
                 }
+
                 return new ServiceResult 
+
                 {
                     Success = false,
                     Errors = new[] { "File with that title exists" }

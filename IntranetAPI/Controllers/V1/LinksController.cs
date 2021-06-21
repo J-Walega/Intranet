@@ -18,21 +18,21 @@ namespace IntranetAPI.Controllers.V1
         [HttpGet(ApiRoutes.Links.GetLinks)]
         public async Task<IActionResult> GetLinks([FromRoute] string category)
         {
-            if(category != string.Empty)
+            var content = await _service.GetLinksByCategory(category);
+            if(content.Count != 0)
             {
-                var content = await _service.GetLinksByCategory(category);
                 return Ok(content);
             }
-            return BadRequest("Something went wrong");
+            return NoContent();
         }
 
         [HttpPost(ApiRoutes.Links.AddLink)]
-        public async Task<IActionResult> AddLink([FromBody] AddLinkRequest request)
+        public async Task<IActionResult> AddLink([FromForm] AddLinkRequest request)
         {
             if (TryValidateModel(request) == true)
             {
                 var result = await _service.SaveLink(request);
-                return Ok();
+                return Ok(result);
             }
             return BadRequest("Something went wrong");
         }
