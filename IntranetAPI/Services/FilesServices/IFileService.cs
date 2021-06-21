@@ -11,7 +11,7 @@ namespace IntranetAPI.Services.FilesServices
 {
     public interface IFileService
     {
-        Task<bool> UploadAsync(UploadFileRequest request);
+        Task<ServiceResult> UploadFileAsync(UploadFileRequest request);
         Task<ServiceResult> DeleteAsync(int Id);
         Task<List<File>> GetAllAsync();
         Task<List<File>> GetByCategory(Category category);

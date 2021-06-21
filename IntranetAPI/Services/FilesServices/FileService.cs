@@ -64,7 +64,7 @@ namespace IntranetAPI.Services.FilesServices
             return await _repo.GetByCategoryAsync(category);
         }
 
-        public async Task<bool> UploadAsync(UploadFileRequest request)
+        public async Task<ServiceResult> UploadFileAsync(UploadFileRequest request)
         {
             try
             {
@@ -83,9 +83,17 @@ namespace IntranetAPI.Services.FilesServices
                     using System.IO.FileStream fileStream = System.IO.File.Create(path);
                     await request.File.CopyToAsync(fileStream);
                     fileStream.Flush();
-                    return await _repo.SaveAsync(file);
+                    await _repo.SaveAsync(file);
+                    return new ServiceResult
+                    {
+                        Success = true
+                    };
                 }
-                return false;
+                return new ServiceResult 
+                {
+                    Success = false,
+                    Errors = new[] { "File with that title exists" }
+                };
             }
             catch(Exception ex)
             {
