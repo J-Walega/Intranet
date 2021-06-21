@@ -1,4 +1,5 @@
 ﻿using IntranetAPI.Contracts.V1.Requests.Files;
+using IntranetAPI.Contracts.V1.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,6 @@ namespace IntranetAPI.Services.FilesServices
 {
     public interface IFileService
     {
-        Task<bool> UploadFileAsync(UploadFileRequest request);
+        Task<ServiceResult> UploadFileAsync(UploadFileRequest request);
     }
 }

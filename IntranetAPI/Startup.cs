@@ -3,6 +3,7 @@ using IntranetAPI.Repo.Interfaces;
 using IntranetAPI.Services.AuthorizationServices;
 using IntranetAPI.Services.FilesServices;
 using IntranetAPI.Services.LinksServices;
+using IntranetAPI.Services.PhonebookServecs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -34,10 +35,12 @@ namespace IntranetAPI
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<ILinkService, LinkService>();
+            services.AddScoped<IPhonebookService, PhonebookService>();
 
             services.AddTransient<IUserRepo, UserRepo>();
             services.AddTransient<IFileRepo, FileRepo>();
             services.AddTransient<ILinkRepo, LinkRepo>();
+            services.AddTransient<IPhoneRepo, PhoneRepo>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

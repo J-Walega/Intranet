@@ -13,7 +13,7 @@ namespace IntranetAPI.Repo
         private readonly DataContext _context;
         public FileRepo(DataContext context)
         {
-            context = _context;
+            _context = context;
         }
 
         public Task<bool> SaveFileAsync(File file)

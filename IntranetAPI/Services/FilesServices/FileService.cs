@@ -1,4 +1,5 @@
 ﻿using IntranetAPI.Contracts.V1.Requests.Files;
+using IntranetAPI.Contracts.V1.Responses;
 using IntranetAPI.Entities;
 using IntranetAPI.Repo.Interfaces;
 using Microsoft.AspNetCore.Hosting;
@@ -20,7 +21,7 @@ namespace IntranetAPI.Services.FilesServices
             _enviroment = enviroment;
         }
 
-        public async Task<bool> UploadFileAsync(UploadFileRequest request)
+        public async Task<ServiceResult> UploadFileAsync(UploadFileRequest request)
         {
             try
             {
@@ -40,9 +41,16 @@ namespace IntranetAPI.Services.FilesServices
                     fileStream.Flush();
                     // Uncomment to save in DB
                     // await _repo.SaveFileAsync(file);
-                    return true;
+                    return new ServiceResult
+                    {
+                        Success = true
+                    };
                 }
-                return false;
+                return new ServiceResult
+                {
+                    Success = false,
+                    Errors = new[] { "File with that title exists" }
+                };
             }
             catch(Exception ex)
             {
