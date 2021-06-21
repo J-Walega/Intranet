@@ -14,5 +14,6 @@ namespace IntranetAPI.Repo.Interfaces
         Task<bool> DeleteAsync(int Id);
         Task<List<File>> GetAllAsync();
         Task<List<File>> GetByCategoryAsync(Category category);
+        Task<File> FindFileAsync(int Id);
     }
 }

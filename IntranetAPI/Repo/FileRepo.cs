@@ -20,21 +20,31 @@ namespace IntranetAPI.Repo
 
         public async Task<bool> DeleteAsync(int Id)
         {
-            var file = _context.Files.Where(x => x.Id == Id).FirstOrDefault();
-            _context.Remove(file);
-            return await SaveChangesAsync();
+            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == Id);
+            if(file != null)
+            {
+                _context.Remove(file);
+                return await SaveChangesAsync();
+            }
+            return false;
+        }
+
+        public async Task<File> FindFileAsync(int Id)
+        {
+            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == Id);
+            return file;
         }
 
         public async Task<List<File>> GetAllAsync()
         {
-            var files = _context.Files.ToListAsync();
-            return await files;
+            var files = await _context.Files.ToListAsync();
+            return files;
         }
 
         public async Task<List<File>> GetByCategoryAsync(Category category)
         {
-            var files = _context.Files.Where(x => x.Category == category).ToListAsync();
-            return await files;
+            var files = await _context.Files.Where(x => x.Category == category).ToListAsync();
+            return files;
         }
 
         public async Task<bool> SaveAsync(File file)

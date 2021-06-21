@@ -1,4 +1,5 @@
 ﻿using IntranetAPI.Contracts.V1.Requests.Files;
+using IntranetAPI.Contracts.V1.Responses;
 using IntranetAPI.Entities;
 using IntranetAPI.Entities.Enums;
 using System;
@@ -11,7 +12,7 @@ namespace IntranetAPI.Services.FilesServices
     public interface IFileService
     {
         Task<bool> UploadAsync(UploadFileRequest request);
-        Task<bool> DeleteAsync(int Id);
+        Task<ServiceResult> DeleteAsync(int Id);
         Task<List<File>> GetAllAsync();
         Task<List<File>> GetByCategory(Category category);
     }

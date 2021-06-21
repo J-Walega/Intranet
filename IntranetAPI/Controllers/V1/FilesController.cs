@@ -32,14 +32,14 @@ namespace IntranetAPI.Controllers.V1
         }
 
         [HttpDelete(ApiRoutes.Files.Delete)]
-        public async Task<IActionResult> DeleteFile(int id)
+        public async Task<IActionResult> DeleteFile([FromRoute]int id)
         {
             var result = await _service.DeleteAsync(id);
-            if(result!=true)
+            if(result.Success != true)
             {
-                return BadRequest("Something went wrong");
+                return BadRequest($"{result.Errors}");
             }
-            return NoContent();
+            return Ok("Deleted");
         }
         [HttpGet(ApiRoutes.Files.GetAll)]
         public async Task<IActionResult> GetAllFiles()

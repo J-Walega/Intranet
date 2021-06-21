@@ -1,4 +1,5 @@
 ﻿using IntranetAPI.Contracts.V1.Requests.Files;
+using IntranetAPI.Contracts.V1.Responses;
 using IntranetAPI.Entities;
 using IntranetAPI.Entities.Enums;
 using IntranetAPI.Repo.Interfaces;
@@ -21,9 +22,36 @@ namespace IntranetAPI.Services.FilesServices
             _enviroment = enviroment;
         }
 
-        public async Task<bool> DeleteAsync(int Id)
+        public async Task<ServiceResult> DeleteAsync(int Id)
         {
-            return await _repo.DeleteAsync(Id);
+            var file = await _repo.FindFileAsync(Id);
+            if(file != null)
+            {
+                string filePath = file.Path.Replace('/', '\\');
+                string fullPath = _enviroment.ContentRootPath + filePath;
+                try
+                {
+                    System.GC.Collect();
+                    System.GC.WaitForPendingFinalizers();
+                    System.IO.File.Delete(fullPath);              
+                }
+                catch (Exception ex)
+                {
+                    throw ex.InnerException;
+                }
+
+                await _repo.DeleteAsync(Id);
+                return new ServiceResult
+                {
+                    Success = true,
+                    Errors = new[] { "Deleted" }
+                };
+            }
+            return new ServiceResult
+            {
+                Success = false,
+                Errors = new[] { "File with that Id doesn't exist" }
+            };
         }
 
         public async Task<List<File>> GetAllAsync()
@@ -55,9 +83,7 @@ namespace IntranetAPI.Services.FilesServices
                     using System.IO.FileStream fileStream = System.IO.File.Create(path);
                     await request.File.CopyToAsync(fileStream);
                     fileStream.Flush();
-                    // Uncomment to save in DB
-                    // await _repo.SaveAsync(file);
-                    return true;
+                    return await _repo.SaveAsync(file);
                 }
                 return false;
             }
