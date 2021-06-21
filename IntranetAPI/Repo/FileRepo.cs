@@ -1,6 +1,8 @@
 ﻿using IntranetAPI.Contracts.V1.Requests.Files;
 using IntranetAPI.Entities;
+using IntranetAPI.Entities.Enums;
 using IntranetAPI.Repo.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +18,39 @@ namespace IntranetAPI.Repo
             _context = context;
         }
 
-        public Task<bool> SaveFileAsync(File file)
+        public async Task<bool> DeleteAsync(int Id)
         {
-            throw new NotImplementedException();
+            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == Id);
+            if(file != null)
+            {
+                _context.Remove(file);
+                return await SaveChangesAsync();
+            }
+            return false;
+        }
+
+        public async Task<File> FindFileAsync(int Id)
+        {
+            var file = await _context.Files.FirstOrDefaultAsync(x => x.Id == Id);
+            return file;
+        }
+
+        public async Task<List<File>> GetAllAsync()
+        {
+            var files = await _context.Files.ToListAsync();
+            return files;
+        }
+
+        public async Task<List<File>> GetByCategoryAsync(Category category)
+        {
+            var files = await _context.Files.Where(x => x.Category == category).ToListAsync();
+            return files;
+        }
+
+        public async Task<bool> SaveAsync(File file)
+        {
+            await _context.Files.AddAsync(file);
+            return await SaveChangesAsync();
         }
 
         private async Task<bool> SaveChangesAsync()

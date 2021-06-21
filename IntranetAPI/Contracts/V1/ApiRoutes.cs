@@ -25,7 +25,10 @@ namespace IntranetAPI.Contracts.V1
 
         public static class Files
         {
-            public const string Upload = Base + "/files";
+            public const string GetAll = Base + "/files";
+            public const string GetByCategory = Base + "/files/{category}";
+            public const string Upload = Base + "/files/upload";
+            public const string Delete = Base + "/files/{id}";
         }
 
         public static class Phonebook

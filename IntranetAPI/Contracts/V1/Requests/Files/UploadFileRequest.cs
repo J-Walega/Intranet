@@ -7,8 +7,9 @@ namespace IntranetAPI.Contracts.V1.Requests.Files
     public class UploadFileRequest
     {
         [Required]
-        public IFormFile File { get; set; }
+        public string Description { get; set; }
         [Required]
+        public IFormFile File { get; set; }
         public Category Category { get; set; }
     }
 }
