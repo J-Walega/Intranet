@@ -2,9 +2,14 @@
 using IntranetAPI.Contracts.V1.Responses.Auth;
 using IntranetAPI.Entities;
 using IntranetAPI.Repo.Interfaces;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace IntranetAPI.Services.AuthorizationServices
@@ -12,10 +17,13 @@ namespace IntranetAPI.Services.AuthorizationServices
     public class AuthService : IAuthService
     {
         private IUserRepo _repo;
-        public AuthService(IUserRepo repo)
+        private IConfiguration _configuration;
+        public AuthService(IUserRepo repo, IConfiguration configuration)
         {
             _repo = repo;
+            _configuration = configuration;
         }
+
         public async Task<LoginResponse> Login(LoginRequest request)
         {
             var response = await _repo.GetUserByUsernameAsync(request.Username);
@@ -24,7 +32,7 @@ namespace IntranetAPI.Services.AuthorizationServices
                 return new LoginResponse
                 {
                     Success = true,
-                    Token = "test"
+                    Token = new JwtSecurityTokenHandler().WriteToken(GenerateToken(response))
                 };
             }
             return new LoginResponse
@@ -47,7 +55,7 @@ namespace IntranetAPI.Services.AuthorizationServices
             } 
             else
             {
-                User user = new User
+                User user = new()
                 {
                     Username = request.Username,
                     Password = request.Password,
@@ -59,7 +67,7 @@ namespace IntranetAPI.Services.AuthorizationServices
                     return new RegisterResponse
                     {
                         Success = true,
-                        Token = "Test token"
+                        Token = new JwtSecurityTokenHandler().WriteToken(GenerateToken(user))
                     };
                 }
                 return new RegisterResponse
@@ -68,6 +76,24 @@ namespace IntranetAPI.Services.AuthorizationServices
                     Errors = new[] { "Something went wrong" }
                 };
             }
+        }
+
+        private JwtSecurityToken GenerateToken(User user)
+        {
+            var authClaims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, user.Username),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtConfig:Secret"]));
+            var token = new JwtSecurityToken(
+                expires: DateTime.UtcNow.AddHours(1),
+                claims: authClaims,
+                signingCredentials: new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
+                );
+
+            return token;
         }
     }
 }

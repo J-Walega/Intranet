@@ -2,11 +2,13 @@
 using IntranetAPI.Contracts.V1.Requests.Phone;
 using IntranetAPI.Entities;
 using IntranetAPI.Services.PhonebookServecs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace IntranetAPI.Controllers.V1
 {
+    [Authorize]
     public class PhonebookController : ControllerBase
     {
         IPhonebookService _service;

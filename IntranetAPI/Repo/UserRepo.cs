@@ -19,8 +19,7 @@ namespace IntranetAPI.Repo
 
         public async Task<User> GetUserByUsernameAsync(string username)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x =>
-            x.Username == username);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Username == username);
             return user;
         }
 
