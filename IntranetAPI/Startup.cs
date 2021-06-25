@@ -65,7 +65,6 @@ namespace IntranetAPI
                     };
                 });
 
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "IntranetAPI", Version = "v1" });
