@@ -17,6 +17,7 @@ namespace IntranetAPI.Controllers.V1
             _service = service;
         }
 
+        [AllowAnonymous]
         [HttpGet(ApiRoutes.Phonebook.GetAll)]
         public async Task<IActionResult> GetAllPhones()
         {
