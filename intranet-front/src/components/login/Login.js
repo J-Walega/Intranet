@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import './Login.css';
 
 async function loginUser(credentials) {
-    return axios({
+    const response = await axios({
         method: 'post',
         url: 'https://localhost:44332/api/v1/login',
         headers: {},
@@ -15,11 +15,8 @@ async function loginUser(credentials) {
         }
     }       
     )
-    .then((response) => {
-        console.log(response);
-    },  (error) => {
-        console.log(error);
-    });
+    return response.data.token
+    
 }
 
 
@@ -29,11 +26,12 @@ export default function Login({ setToken }) {
 
     const handleSubmit = async e => {
         e.preventDefault();
-        const token = await loginUser({
+        var token = await loginUser({
             username,
             password
         });
-        setToken(token);
+        console.log(token)
+        setToken('Bearer ' + token);
     }
 
     return(
