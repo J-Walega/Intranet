@@ -1,0 +1,11 @@
+.login-button {
+    margin-top: 10px;
+    width: 25%;
+}
+
+.login-form {
+    margin: auto;
+    padding-top: 20px;
+    width: 50%;
+    align-self: center;
+}

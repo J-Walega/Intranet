@@ -96,6 +96,17 @@ namespace IntranetAPI
             });
 
             services.AddDirectoryBrowser();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAnyOrigin", builder =>
+                {
+                    // Allow "Access-Control-Allow-Origin: *" header
+                    builder.AllowAnyOrigin();
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -111,6 +122,8 @@ namespace IntranetAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("AllowAnyOrigin");
 
             app.UseAuthentication();
             app.UseAuthorization();

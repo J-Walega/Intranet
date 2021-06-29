@@ -20,7 +20,7 @@ componentDidMount() {
 render() {
     return (
         <ul>
-            {this.state.phones.map(phone => <li>{phone.number}</li>)}
+            {this.state.phones.map(phone => <li key={phone.id}>{[phone.number, phone.name]}</li>)}
         </ul>
     )
  }
