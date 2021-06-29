@@ -5,10 +5,15 @@ import PropTypes from 'prop-types';
 import './Login.css';
 
 async function loginUser(credentials) {
-    return axios.post(
-        'https://localhost:44332/api/v1/login', {
-            credentials
+    return axios({
+        method: 'post',
+        url: 'https://localhost:44332/api/v1/login',
+        headers: {},
+        data: {
+            username: credentials.username,
+            password: credentials.password
         }
+    }       
     )
     .then((response) => {
         console.log(response);
@@ -49,4 +54,8 @@ export default function Login({ setToken }) {
             </Form>
         </Container>       
     )
+}
+
+Login.propTypes = {
+    setToken: PropTypes.func.isRequired
 }

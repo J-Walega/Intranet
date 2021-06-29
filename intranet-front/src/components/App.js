@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import Login from './login/Login';
@@ -16,12 +16,12 @@ function getToken() {
 }
 
 function App() {
-  const [token, setToken] = useState();
+  const token = getToken();
 
   if(!token) {
     return <Login setToken={setToken} />
   }
-  
+
   return(
     <Router>
         <Navigation/>

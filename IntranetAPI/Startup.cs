@@ -103,6 +103,8 @@ namespace IntranetAPI
                 {
                     // Allow "Access-Control-Allow-Origin: *" header
                     builder.AllowAnyOrigin();
+                    builder.AllowAnyHeader();
+                    builder.AllowAnyMethod();
                 });
             });
         }
