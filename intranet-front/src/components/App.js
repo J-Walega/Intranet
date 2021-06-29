@@ -9,25 +9,14 @@ function setToken(userToken) {
   localStorage.setItem('token', JSON.stringify(userToken))
 }
 
-function getToken() {
-  const tokenString = localStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.token
-}
-
 function App() {
-  const token = getToken();
-
-  if(!token) {
-    return <Login setToken={setToken} />
-  }
 
   return(
     <Router>
         <Navigation/>
         <Switch>
           <Route path="/phonebook" component={Phonebook}/>
-          <Route path="/login" component={Login}/>
+          <Route path="/login" render={props => <Login setToken = {setToken}/>}/>
         </Switch>
     </Router>
   );
