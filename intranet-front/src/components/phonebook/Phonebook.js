@@ -1,27 +1,40 @@
-
-import axios from 'axios';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Table } from 'react-bootstrap';
 import './Phonebook.css';
 
-export default class Phonebook extends React.Component {
-    state = {
-        phones: []
-    }
+export default function Phonebook() { 
+    
+    const [phones, setPhones] = useState([]);
 
-
-componentDidMount() {
-    axios.get('https://localhost:44332/api/v1/phones')
-        .then(res => {
-            const phones = res.data;
-            this.setState({ phones });
+    useEffect(() => {
+        fetch('https://localhost:44332/api/v1/phones',
+        {
+            method: 'GET'
         })
-}
+        .then(res => res.json())
+        .then(response => {
+            setPhones(response);
+        })
+        .catch(error => console.log(error));
+    })
 
-render() {
     return (
-        <ul>
-            {this.state.phones.map(phone => <li key={phone.id}>{[phone.number, phone.name]}</li>)}
-        </ul>
+        <Table striped bordered hover>
+            <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>Numer</th>
+                </tr>
+            </thead>
+
+            {phones.map((c, index) => (
+            <tbody>
+                <tr key={index}>
+                    <td>{c.name}</td>
+                    <td>{c.number}</td>
+                </tr>
+            </tbody>
+            ))}
+        </Table>        
     )
- }
 }
