@@ -1,10 +1,32 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
+import { Table, Button, Modal, Form } from 'react-bootstrap';
 import './Phonebook.css';
 
 export default function Phonebook() { 
     
     const [phones, setPhones] = useState([]);
+    const [show, setShow] = useState(false);
+
+    const [phoneNumber, setPhoneNumber] = useState();
+    const [phoneName, setPhoneName] = useState();
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    async function addPhone(details) {
+        const response = await axios ({
+            method: 'post',
+            url: 'https://localhost:44332/api/v1/phones',
+            headers: {},
+            data: {
+                name: details.phoneName,
+                number: details.phoneNumber
+            }
+        })
+        console.log(response);
+        return response
+    }
 
     useEffect(() => {
         fetch('https://localhost:44332/api/v1/phones',
@@ -16,25 +38,64 @@ export default function Phonebook() {
             setPhones(response);
         })
         .catch(error => console.log(error));
-    })
+    }, [])
+
+    const handleSubmit = async e => {
+        e.preventDefault();
+        await addPhone({
+            phoneName,
+            phoneNumber
+        });
+        handleClose();
+    }
 
     return (
-        <Table striped bordered hover>
-            <thead>
-                <tr>
-                    <th>Nazwa</th>
-                    <th>Numer</th>
-                </tr>
-            </thead>
+        <div>
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <th>Nazwa</th>
+                        <th>Numer</th>
+                    </tr>
+                </thead>
 
-            {phones.map((c, index) => (
-            <tbody>
-                <tr key={index}>
-                    <td>{c.name}</td>
-                    <td>{c.number}</td>
-                </tr>
-            </tbody>
-            ))}
-        </Table>        
+                {phones.map((c, index) => (
+                <tbody>
+                    <tr key={index}>
+                        <td>{c.name}</td>
+                        <td>{c.number}</td>
+                    </tr>
+                </tbody>
+                ))}
+            </Table>
+            <div>
+                <Button className="editors" variant="primary" onClick={handleShow}>Dodaj</Button>{''}
+                <Button className="editors" variant="success">Edytuj</Button>{''}
+                <Button className="editors" variant="danger">Usuń</Button>{''}
+            </div>
+            <div>
+                <Modal show={show} onHide={handleClose} animation={false}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Dodaj numer telefonu</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group controlId = "formBasicName">
+                                <Form.Label>Nazwa</Form.Label>
+                                <Form.Control type="text" placeholder="Nazwa numeru" onChange={e => setPhoneName(e.target.value)}/>                                
+                            </Form.Group>
+                            <Form.Group controlId = "formBasicNumber">
+                                <Form.Label>Numer</Form.Label>
+                                <Form.Control type="number" placeholder="Numer telefonu" onChange={e => setPhoneNumber(e.target.value)}/>
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={handleSubmit}>Zapisz</Button>
+                        <Button variant="secondary" onClick={handleClose}>Zamknij</Button>
+                    </Modal.Footer>
+                </Modal>
+            </div>
+        </div>                
     )
 }

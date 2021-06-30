@@ -3,3 +3,8 @@ Table {
     margin: 10px;
     max-width: fit-content;
 }
+
+.editors{
+    padding: 5px;
+    margin: 5px;
+}
