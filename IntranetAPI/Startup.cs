@@ -61,6 +61,7 @@ namespace IntranetAPI
                     {
                         ValidateIssuer = false,
                         ValidateAudience = false,
+                        ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JwtConfig:Secret"]))
                     };
                 });

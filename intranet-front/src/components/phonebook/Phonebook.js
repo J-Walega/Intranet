@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, Form } from 'react-bootstrap';
 import './Phonebook.css';
@@ -14,15 +13,20 @@ export default function Phonebook() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const token = localStorage.getItem('token');
+
     async function addPhone(details) {
-        const response = await axios ({
+        const response = await fetch ('https://localhost:44332/api/v1/phones',{
             method: 'post',
-            url: 'https://localhost:44332/api/v1/phones',
-            headers: {},
-            data: {
+            headers: {
+                'Authorization': token,
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
                 name: details.phoneName,
                 number: details.phoneNumber
-            }
+            })
         })
         console.log(response);
         return response
@@ -40,6 +44,18 @@ export default function Phonebook() {
         .catch(error => console.log(error));
     }, [])
 
+    async function refreshPhones() {
+        fetch('https://localhost:44332/api/v1/phones',
+        {
+            method: 'GET'
+        })
+        .then(res => res.json())
+        .then(response => {
+            setPhones(response);
+        })
+        .catch(error => console.log(error));
+    }
+
     const handleSubmit = async e => {
         e.preventDefault();
         await addPhone({
@@ -47,6 +63,7 @@ export default function Phonebook() {
             phoneNumber
         });
         handleClose();
+        await refreshPhones();
     }
 
     return (
