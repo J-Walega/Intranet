@@ -2,12 +2,13 @@
 using IntranetAPI.Contracts.V1.Requests.Links;
 using IntranetAPI.Services.LinksServices;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace IntranetAPI.Controllers.V1
 {
-    [Authorize]
+    [EnableCors("AllowAnyOrigin")]
     public class LinksController : ControllerBase
     {
         private readonly ILinkService _service;

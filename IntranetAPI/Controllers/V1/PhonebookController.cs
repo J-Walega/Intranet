@@ -3,12 +3,13 @@ using IntranetAPI.Contracts.V1.Requests.Phone;
 using IntranetAPI.Entities;
 using IntranetAPI.Services.PhonebookServecs;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace IntranetAPI.Controllers.V1
 {
-    [Authorize]
+    [EnableCors("AllowAnyOrigin")]
     public class PhonebookController : ControllerBase
     {
         IPhonebookService _service;

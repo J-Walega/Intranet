@@ -20,7 +20,7 @@ export default function Phonebook() {
             method: 'post',
             headers: {
                 'Authorization': token,
-                'Accept': 'application/json',
+                'Accept': '*/*',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({

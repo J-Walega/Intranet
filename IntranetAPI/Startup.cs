@@ -121,12 +121,13 @@ namespace IntranetAPI
             }
 
             app.UseHttpsRedirection();
+            app.UseStatusCodePages();
 
-            app.UseRouting();
-
-            app.UseCors("AllowAnyOrigin");
 
             app.UseAuthentication();
+
+            app.UseRouting();
+            app.UseCors("AllowAnyOrigin");
             app.UseAuthorization();
 
             app.UseStaticFiles();
