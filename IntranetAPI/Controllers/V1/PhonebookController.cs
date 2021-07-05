@@ -32,6 +32,10 @@ namespace IntranetAPI.Controllers.V1
         [HttpPost(ApiRoutes.Phonebook.Add)]
         public async Task<IActionResult> AddPhone([FromBody] AddPhoneRequest request)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             var response = await _service.AddPhone(request);
             if(response != false)
             {
@@ -54,6 +58,11 @@ namespace IntranetAPI.Controllers.V1
         [HttpPatch(ApiRoutes.Phonebook.Update)]
         public async Task<IActionResult> UpdatePhone([FromRoute] int phoneId, [FromBody] AddPhoneRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var phone = new Phone
             {
                 Id = phoneId,

@@ -31,12 +31,13 @@ namespace IntranetAPI.Controllers.V1
         [HttpPost(ApiRoutes.Links.AddLink)]
         public async Task<IActionResult> AddLink([FromForm] AddLinkRequest request)
         {
-            if (TryValidateModel(request) == true)
+            if(!ModelState.IsValid)
             {
-                var result = await _service.SaveLink(request);
-                return Ok(result);
+                return BadRequest();
             }
-            return BadRequest("Something went wrong");
+
+            var result = await _service.SaveLink(request);
+            return Ok(result);
         }
     }
 }
