@@ -2,6 +2,13 @@ Table {
     padding: 10px;
     margin: 10px;
     max-width: fit-content;
+    align-self: center;
+    width: 50%;
+}
+
+.Main{
+    display: flex;
+    align-content: center;
 }
 
 .editors{

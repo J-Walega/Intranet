@@ -13,7 +13,7 @@ export default function Phonebook() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const token = sessionStorage.getItem('token').replace(/['"]+/g, '');
+    const token = sessionStorage.getItem('token');
 
     async function addPhone(details) {
         const response = await fetch ('https://localhost:44332/api/v1/phones',{
@@ -58,6 +58,17 @@ export default function Phonebook() {
         .catch(error => console.log(error));
     }
 
+    async function deletePhone(id) {
+        fetch('https://localhost:44332/api/v1/phones/' + id,
+        {
+            method: 'Delete',
+            headers:{
+                Authorization: token
+            }
+        });
+        await refreshPhones();
+    }
+
     const handleSubmit = async e => {
         e.preventDefault();
         await addPhone({
@@ -69,7 +80,7 @@ export default function Phonebook() {
     }
 
     return (
-        <div>
+        <div className="Main">
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -78,19 +89,19 @@ export default function Phonebook() {
                     </tr>
                 </thead>
 
-                {phones.map((c, index) => (
-                <tbody key={index}>
+                {phones.map(c => (
+                <tbody key={c.id}>
                     <tr>
                         <td>{c.name}</td>
                         <td>{c.number}</td>
+                        <td><Button className="editors" size="sm" variant="danger" onClick={() => deletePhone(c.id)}>Usuń</Button></td>
+                        <td><Button className="editors" size="sm" variant="success">Edytuj</Button></td>                        
                     </tr>
                 </tbody>
                 ))}
             </Table>
             <div>
-                <Button className="editors" variant="primary" onClick={handleShow}>Dodaj</Button>{''}
-                <Button className="editors" variant="success">Edytuj</Button>{''}
-                <Button className="editors" variant="danger">Usuń</Button>{''}
+                <Button className="editors" variant="primary" onClick={handleShow}>Dodaj</Button>
             </div>
             <div>
                 <Modal show={show} onHide={handleClose} animation={false}>

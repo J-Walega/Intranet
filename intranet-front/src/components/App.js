@@ -6,7 +6,7 @@ import Phonebook from './phonebook/Phonebook';
 import Navigation from './navbar/Navigation';
 
 function setToken(userToken) {
-  sessionStorage.setItem('token', JSON.stringify(userToken))
+  sessionStorage.setItem('token', userToken)
 }
 
 function App() {
