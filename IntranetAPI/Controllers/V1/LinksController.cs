@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace IntranetAPI.Controllers.V1
 {
-    [EnableCors("AllowAnyOrigin")]
     public class LinksController : ControllerBase
     {
         private readonly ILinkService _service;

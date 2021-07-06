@@ -13,15 +13,14 @@ export default function Phonebook() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token').replace(/['"]+/g, '');
 
     async function addPhone(details) {
         const response = await fetch ('https://localhost:44332/api/v1/phones',{
             method: 'post',
             headers: {
-                'Authorization': token,
-                'Accept': '*/*',
-                'Content-Type': 'application/json'
+                Authorization: token,
+                'Content-Type': 'application/json' 
             },
             body: JSON.stringify({
                 name: details.phoneName,
@@ -35,7 +34,10 @@ export default function Phonebook() {
     useEffect(() => {
         fetch('https://localhost:44332/api/v1/phones',
         {
-            method: 'GET'
+            method: 'GET',
+            headers: {
+                'Access-Control-Allow-Origin': '*',
+            }
         })
         .then(res => res.json())
         .then(response => {
@@ -47,7 +49,7 @@ export default function Phonebook() {
     async function refreshPhones() {
         fetch('https://localhost:44332/api/v1/phones',
         {
-            method: 'GET'
+            method: 'GET',
         })
         .then(res => res.json())
         .then(response => {
@@ -77,8 +79,8 @@ export default function Phonebook() {
                 </thead>
 
                 {phones.map((c, index) => (
-                <tbody>
-                    <tr key={index}>
+                <tbody key={index}>
+                    <tr>
                         <td>{c.name}</td>
                         <td>{c.number}</td>
                     </tr>

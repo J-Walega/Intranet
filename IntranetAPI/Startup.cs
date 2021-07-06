@@ -100,12 +100,11 @@ namespace IntranetAPI
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAnyOrigin", builder =>
+                options.AddDefaultPolicy( builder =>
                 {
-                    // Allow "Access-Control-Allow-Origin: *" header
-                    builder.AllowAnyOrigin();
-                    builder.AllowAnyHeader();
-                    builder.AllowAnyMethod();
+                    builder.WithOrigins("http://localhost:3000", "https://localhost:8086", "http://localhost:44332", "https://localhost:44332")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
                 });
             });
         }
@@ -127,7 +126,7 @@ namespace IntranetAPI
             app.UseAuthentication();
 
             app.UseRouting();
-            app.UseCors("AllowAnyOrigin");
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseStaticFiles();

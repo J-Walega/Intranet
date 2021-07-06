@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace IntranetAPI.Controllers.V1
 {
-    [EnableCors("AllowAnyOrigin")]
     public class FilesController : ControllerBase
     {
         private readonly IFileService _service;

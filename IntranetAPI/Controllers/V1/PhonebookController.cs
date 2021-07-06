@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IntranetAPI.Controllers.V1
 {
-    [EnableCors("AllowAnyOrigin")]
+    [Authorize]
     public class PhonebookController : ControllerBase
     {
         IPhonebookService _service;
