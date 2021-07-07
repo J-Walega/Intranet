@@ -9,7 +9,7 @@ namespace IntranetAPI.Contracts.V1.Requests.Phone
     public class AddPhoneRequest
     {
         [Required]
-        public string Name{ get; set; }
+        public string Name { get; set; }
         [Required]
         public int Number { get; set; }
     }

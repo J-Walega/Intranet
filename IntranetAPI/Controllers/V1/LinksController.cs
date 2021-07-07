@@ -2,12 +2,12 @@
 using IntranetAPI.Contracts.V1.Requests.Links;
 using IntranetAPI.Services.LinksServices;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace IntranetAPI.Controllers.V1
 {
-    [Authorize]
     public class LinksController : ControllerBase
     {
         private readonly ILinkService _service;
@@ -31,12 +31,13 @@ namespace IntranetAPI.Controllers.V1
         [HttpPost(ApiRoutes.Links.AddLink)]
         public async Task<IActionResult> AddLink([FromForm] AddLinkRequest request)
         {
-            if (TryValidateModel(request) == true)
+            if(!ModelState.IsValid)
             {
-                var result = await _service.SaveLink(request);
-                return Ok(result);
+                return BadRequest();
             }
-            return BadRequest("Something went wrong");
+
+            var result = await _service.SaveLink(request);
+            return Ok(result);
         }
     }
 }

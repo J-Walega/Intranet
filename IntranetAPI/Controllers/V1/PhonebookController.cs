@@ -3,6 +3,7 @@ using IntranetAPI.Contracts.V1.Requests.Phone;
 using IntranetAPI.Entities;
 using IntranetAPI.Services.PhonebookServecs;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -32,6 +33,10 @@ namespace IntranetAPI.Controllers.V1
         [HttpPost(ApiRoutes.Phonebook.Add)]
         public async Task<IActionResult> AddPhone([FromBody] AddPhoneRequest request)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
             var response = await _service.AddPhone(request);
             if(response != false)
             {
@@ -54,6 +59,11 @@ namespace IntranetAPI.Controllers.V1
         [HttpPatch(ApiRoutes.Phonebook.Update)]
         public async Task<IActionResult> UpdatePhone([FromRoute] int phoneId, [FromBody] AddPhoneRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var phone = new Phone
             {
                 Id = phoneId,

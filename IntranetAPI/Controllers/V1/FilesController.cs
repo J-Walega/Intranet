@@ -4,6 +4,7 @@ using IntranetAPI.Entities;
 using IntranetAPI.Entities.Enums;
 using IntranetAPI.Services.FilesServices;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,6 @@ using System.Threading.Tasks;
 
 namespace IntranetAPI.Controllers.V1
 {
-    [Authorize]
     public class FilesController : ControllerBase
     {
         private readonly IFileService _service;
