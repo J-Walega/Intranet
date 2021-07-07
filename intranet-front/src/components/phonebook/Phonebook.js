@@ -6,18 +6,24 @@ export default function Phonebook() {
     
     const [phones, setPhones] = useState([]);
     const [show, setShow] = useState(false);
+    const [showEdit, setShowEdit] = useState(false);
 
     const [phoneNumber, setPhoneNumber] = useState();
     const [phoneName, setPhoneName] = useState();
 
+    const [phoneId, setPhoneId] = useState();
+
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const handleCloseEdit = () => setShowEdit(false);
+    const handleShowEdit = () => setShowEdit(true);
 
     const token = sessionStorage.getItem('token');
 
     async function addPhone(details) {
         const response = await fetch ('https://localhost:44332/api/v1/phones',{
-            method: 'post',
+            method: 'POST',
             headers: {
                 Authorization: token,
                 'Content-Type': 'application/json' 
@@ -27,7 +33,6 @@ export default function Phonebook() {
                 number: details.phoneNumber
             })
         })
-        console.log(response);
         return response
     }
 
@@ -47,7 +52,7 @@ export default function Phonebook() {
     }, [])
 
     async function refreshPhones() {
-        fetch('https://localhost:44332/api/v1/phones',
+        await fetch('https://localhost:44332/api/v1/phones',
         {
             method: 'GET',
         })
@@ -59,14 +64,30 @@ export default function Phonebook() {
     }
 
     async function deletePhone(id) {
-        fetch('https://localhost:44332/api/v1/phones/' + id,
+        await fetch('https://localhost:44332/api/v1/phones/' + id,
         {
-            method: 'Delete',
+            method: 'DELETE',
             headers:{
                 Authorization: token
             }
         });
         await refreshPhones();
+    }
+
+    async function updatePhone(id, content) {
+        await fetch('https://localhost:44332/api/v1/phones/' + id,
+        {
+            method: 'PATCH',
+            headers: {
+                Authorization: token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: content.phoneName,
+                number: content.phoneNumber
+            })
+        })
+        console.log(content)
     }
 
     const handleSubmit = async e => {
@@ -79,53 +100,91 @@ export default function Phonebook() {
         await refreshPhones();
     }
 
-    return (
-        <div className="Main">
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>Nazwa</th>
-                        <th>Numer</th>
-                    </tr>
-                </thead>
+    const handleEdit = async e => {
+        e.preventDefault();
+        await updatePhone(phoneId, {
+            phoneName,
+            phoneNumber
+        });
+        handleCloseEdit();
+        await refreshPhones();
+    }
 
-                {phones.map(c => (
-                <tbody key={c.id}>
-                    <tr>
-                        <td>{c.name}</td>
-                        <td>{c.number}</td>
-                        <td><Button className="editors" size="sm" variant="danger" onClick={() => deletePhone(c.id)}>Usuń</Button></td>
-                        <td><Button className="editors" size="sm" variant="success">Edytuj</Button></td>                        
-                    </tr>
-                </tbody>
-                ))}
-            </Table>
-            <div>
-                <Button className="editors" variant="primary" onClick={handleShow}>Dodaj</Button>
-            </div>
-            <div>
-                <Modal show={show} onHide={handleClose} animation={false}>
-                    <Modal.Header closeButton>
-                        <Modal.Title>Dodaj numer telefonu</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form onSubmit={handleSubmit}>
-                            <Form.Group controlId = "formBasicName">
-                                <Form.Label>Nazwa</Form.Label>
-                                <Form.Control type="text" placeholder="Nazwa numeru" onChange={e => setPhoneName(e.target.value)}/>                                
-                            </Form.Group>
-                            <Form.Group controlId = "formBasicNumber">
-                                <Form.Label>Numer</Form.Label>
-                                <Form.Control type="number" placeholder="Numer telefonu" onChange={e => setPhoneNumber(e.target.value)}/>
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="primary" onClick={handleSubmit}>Zapisz</Button>
-                        <Button variant="secondary" onClick={handleClose}>Zamknij</Button>
-                    </Modal.Footer>
-                </Modal>
-            </div>
-        </div>                
+    function openEdit(id) {
+        setPhoneId(id);
+        handleShowEdit();
+    }
+
+    return (
+            <div className="Main">
+                <Table striped bordered hover>
+                    <thead>
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Numer</th>
+                        </tr>
+                    </thead>
+
+                    {phones.map(c => (
+                    <tbody key={c.id}>
+                        <tr>
+                            <td>{c.name}</td>
+                            <td>{c.number}</td>
+                            <td><Button className="editors" size="sm" variant="danger" onClick={() => deletePhone(c.id)}>Usuń</Button></td>
+                            <td><Button className="editors" size="sm" variant="success" onClick={() => openEdit(c.id)}>Edytuj</Button></td>                        
+                        </tr>
+                    </tbody>
+                    ))}
+                </Table>
+                <div className="button">                    
+                </div>
+                <div>
+                    <Modal show={show} onHide={handleClose} animation={false}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Dodaj numer telefonu</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form onSubmit={handleSubmit}>
+                                <Form.Group controlId = "formBasicName">
+                                    <Form.Label>Nazwa</Form.Label>
+                                    <Form.Control type="text" placeholder="Nazwa numeru" onChange={e => setPhoneName(e.target.value)}/>                                
+                                </Form.Group>
+                                <Form.Group controlId = "formBasicNumber">
+                                    <Form.Label>Numer</Form.Label>
+                                    <Form.Control type="number" placeholder="Numer telefonu" onChange={e => setPhoneNumber(e.target.value)}/>
+                                </Form.Group>
+                            </Form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="primary" onClick={handleSubmit}>Zapisz</Button>
+                            <Button variant="secondary" onClick={handleClose}>Zamknij</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
+                <Button className="button" variant="primary" onClick={handleShow}>Dodaj</Button>  
+                <div>
+                    <Modal show={showEdit} onHide={handleCloseEdit} animation={false}>
+                        <Modal.Header closeButton>
+                            <Modal.Title>Edytuj</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form onSubmit={handleEdit}>
+                                <Form.Group controlId = "formBasicName">
+                                    <Form.Label>Nazwa</Form.Label>
+                                    <Form.Control type="text" placeholder="Nazwa numeru" onChange={e => setPhoneName(e.target.value)}/>
+                                </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Numer</Form.Label>
+                                    <Form.Control type="number" placeholder="Numer telefonu" onChange={e => setPhoneNumber(e.target.value)}/>
+                                </Form.Group>
+                            </Form>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="primary" onClick={handleEdit}>Zapisz</Button>
+                            <Button variant="secondary" onClick={handleCloseEdit}>Zamknij</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
+            </div>              
     )
 }
