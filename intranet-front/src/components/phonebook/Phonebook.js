@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Button, Modal, Form } from 'react-bootstrap';
-import './Phonebook.css';
+
+//TODO: Styling, rendering logic(if user is not logged-don't render buttons)
 
 export default function Phonebook() { 
     
@@ -116,7 +117,7 @@ export default function Phonebook() {
     }
 
     return (
-            <div className="Main">
+            <div className="container px-4 mx-auto sm">
                 <Table striped bordered hover>
                     <thead>
                         <tr>
@@ -130,14 +131,15 @@ export default function Phonebook() {
                         <tr>
                             <td>{c.name}</td>
                             <td>{c.number}</td>
-                            <td><Button className="editors" size="sm" variant="danger" onClick={() => deletePhone(c.id)}>Usuń</Button></td>
-                            <td><Button className="editors" size="sm" variant="success" onClick={() => openEdit(c.id)}>Edytuj</Button></td>                        
+                            <td><Button size="sm" variant="danger" onClick={() => deletePhone(c.id)}>Usuń</Button></td>
+                            <td><Button size="sm" variant="success" onClick={() => openEdit(c.id)}>Edytuj</Button></td>                        
                         </tr>
                     </tbody>
                     ))}
                 </Table>
-                <div className="button">                    
-                </div>
+
+                <Button className="button" variant="primary" onClick={handleShow}>Dodaj</Button>
+
                 <div>
                     <Modal show={show} onHide={handleClose} animation={false}>
                         <Modal.Header closeButton>
@@ -161,7 +163,7 @@ export default function Phonebook() {
                         </Modal.Footer>
                     </Modal>
                 </div>
-                <Button className="button" variant="primary" onClick={handleShow}>Dodaj</Button>  
+
                 <div>
                     <Modal show={showEdit} onHide={handleCloseEdit} animation={false}>
                         <Modal.Header closeButton>
@@ -185,6 +187,7 @@ export default function Phonebook() {
                         </Modal.Footer>
                     </Modal>
                 </div>
+
             </div>              
     )
 }
