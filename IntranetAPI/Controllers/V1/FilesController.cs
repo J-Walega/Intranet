@@ -25,6 +25,10 @@ namespace IntranetAPI.Controllers.V1
         [HttpPost(ApiRoutes.Files.Upload)]
         public async Task<IActionResult> UploadFile([FromForm] UploadFileRequest request)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest("Model state is invalid");
+            }
             var result = await _service.UploadFileAsync(request);
             if(result.Success != true)
             {

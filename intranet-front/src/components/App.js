@@ -4,6 +4,7 @@ import './App.css';
 import Login from './login/Login';
 import Phonebook from './phonebook/Phonebook';
 import Navigation from './navbar/Navigation';
+import Upload from './upload/upload';
 
 function setToken(userToken) {
   sessionStorage.setItem('token', userToken)
@@ -17,6 +18,7 @@ function App() {
         <Switch>
           <Route path="/phonebook" component={Phonebook}/>
           <Route path="/login" render={props => <Login setToken = {setToken}/>}/>
+          <Route path="/upload" component={Upload} />
         </Switch>
     </Router>
   );
